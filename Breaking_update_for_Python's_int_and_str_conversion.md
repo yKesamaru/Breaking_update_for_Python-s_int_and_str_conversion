@@ -1,5 +1,6 @@
 :::message
-一部加筆修正しました(2022年9月14日15時46分)
+一部加筆修正しました
+- 2022年9月14日17時18分
 :::
 
 # int/str型変換における破壊的変更のお知らせ
@@ -9,7 +10,9 @@ https://www.youtube.com/watch?app=desktop&v=eTucYT2LpNU
 今さっき上記YouTubeで知ったのですが、なかなかのニュースが飛び込んできました。
 
 
-**2022年9月7日水曜日、Pythonにおいて下位互換性を破壊するセキュリティーアップデートが緊急でリリースされました。**
+**2022年9月7日水曜日[^1]、Pythonにおいて下位互換性を破壊するセキュリティーアップデートが緊急でリリースされました。** [^2]
+[^1]: RedHatのCVEでは2022年9月1日、GitHub issueに出てきたのは同年8月8日、リリースは同年9月6日、Python Insiderの告知は同年9月7日となっています。
+[^2]:  開発版の3.11のみアナウンスがあったそうです。
 
 すくなからずプロジェクトに変更を強いられるケースが発生するかもしれません。といってもこのケースに当てはまるならばきちんと修正したほうが良い内容ではあります。
 さきほど検索してみましたが自分が観測した限りでは唯一窓の杜さんがさらっと触れています。
@@ -20,16 +23,20 @@ https://www.youtube.com/watch?app=desktop&v=eTucYT2LpNU
 
 ## 特に注意が必要なユーザー
 - `SymPy`を直接あるいは間接的に利用している
+- 自動テストで最新バージョンを指定している
 
 ## 今分かっている対処法
 - 環境変数またはコマンドラインフラグを使用して制限を設定、その後にPythonを再起動
-[Configuring the limit](https://docs.python.org/3/library/stdtypes.html#configuring-the-limit)
+- sys.set_int_max_str_digits(n)を追加（YouTubeで紹介している方法）
+- etc...
+
+[Configuring the limit](https://docs.python.org/3/library/stdtypes.html#configuring-the-limit)をご参照ください。
 
 https://docs.python.org/3/library/stdtypes.html#configuring-the-limit
 
 ![](https://raw.githubusercontent.com/yKesamaru/Breaking_update_for_Python-s_int_and_str_conversion/master/img/PASTE_IMAGE_2022-09-14-15-41-37.png)
 
-詳細は以下で紹介している[こちら](https://discuss.python.org/t/int-str-conversions-broken-in-latest-python-bugfix-releases/18889)をご参照ください。
+いきさつは以下で紹介している[こちら](https://discuss.python.org/t/int-str-conversions-broken-in-latest-python-bugfix-releases/18889)をご参照ください。
 
 ## 概略
 > （意訳）
@@ -43,6 +50,24 @@ https://blog.python.org/2022/09/python-releases-3107-3914-3814-and-3714.html
 
 > Converting between int and str in bases other than 2 (binary), 4, 8 (octal), 16 (hexadecimal), or 32 such as base 10 (decimal) now raises a ValueError if the number of digits in string form is above a limit to avoid potential denial of service attacks due to the algorithmic complexity.
 Security releases for 3.9.14, 3.8.14, and 3.7.14 are made available simultaneously to address this issue, along with some less urgent security content.
+
+### 影響の範囲
+int, str, bytesの相互型変換
+- int(string) with default base 10.
+- int(string, base) for all bases that are not a power of 2.
+- str(integer).
+- repr(integer)
+- any other string conversion to base 10, for example f"{integer}", "{}".format(integer), or b"%d" % integer.
+### 影響しないパターン
+線形アルゴリズムを使用する関数
+- int(string, base) with base 2, 4, 8, 16, or 32.
+- int.from_bytes() and int.to_bytes().
+- hex(), oct(), bin().
+- Format Specification Mini-Language for hex, octal, and binary numbers.
+- str to float.
+- str to decimal.Decimal.
+
+https://docs.python.org/3.8/library/stdtypes.html#integer-string-conversion-length-limitation
 
 ## 発端
 もともとは以下のissueが発端とされています。
