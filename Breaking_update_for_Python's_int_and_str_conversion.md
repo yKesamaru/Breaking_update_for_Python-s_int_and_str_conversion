@@ -12,9 +12,9 @@ https://www.youtube.com/watch?app=desktop&v=eTucYT2LpNU
 間違いがありましたらお知らせいただけると幸いです。
 
 ## 概略
+> （意訳）
 > 潜在的なサービス拒否攻撃を回避するため、2(2進数)、4、8(8進数)、16(16進数)、10(10進数)などでintとstrの相互変換を行うとValueErrorを出すようにしました。
 対象:3.10.7、3.9.14、3.8.14、および3.7.14
-（意訳）
 
 さて公式では以下から参照が可能です。
 https://blog.python.org/2022/09/python-releases-3107-3914-3814-and-3714.html
@@ -36,6 +36,7 @@ https://github.com/python/cpython/issues/95778
 
 ## 検証コード
 制限される桁数は4300のようです。上記YouTubeでは以下のコードで検証しています。
+:::details 検証
 ```python
 import math
 # import sys
@@ -76,7 +77,10 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+:::
+
 消費される時間をプロットするために以下のコードが使われています。
+:::details 消費時間計測
 ```python
 import timeit
 
@@ -139,6 +143,7 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+:::
 
 結果は以下のようになります。
 - str/int conversion times
@@ -159,4 +164,5 @@ https://discuss.python.org/t/int-str-conversions-broken-in-latest-python-bugfix-
 
 それぞれ思うところはある…というところでしょうか。
 
-もし該当コードが思い当たる場合は早めに対処が得策でしょう。
+もし該当コードが思い当たり、かつ今回のアップデート対象のバージョンを採用している場合は早めの対処が必要です。
+続報を待ちましょう。
