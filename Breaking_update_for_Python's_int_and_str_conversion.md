@@ -147,10 +147,10 @@ if __name__ == '__main__':
 
 結果は以下のようになります。
 - str/int conversion times
-  ![](img/PASTE_IMAGE_2022-09-14-14-21-28.png)
+  ![](https://raw.githubusercontent.com/yKesamaru/Breaking_update_for_Python-s_int_and_str_conversion/master/img/PASTE_IMAGE_2022-09-14-14-21-28.png)
 
 - log-log str/int conversion times
-  ![](img/PASTE_IMAGE_2022-09-14-14-22-19.png)
+  ![](https://raw.githubusercontent.com/yKesamaru/Breaking_update_for_Python-s_int_and_str_conversion/master/img/PASTE_IMAGE_2022-09-14-14-22-19.png)
 
 これらをみて分かるように、適切なサニタイズをしていなければこれらの変換を利用した攻撃を受ける可能性があります。
 もしこれらの問題に興味があれば[Int/str conversions broken in latest Python bugfix releases](https://discuss.python.org/t/int-str-conversions-broken-in-latest-python-bugfix-releases/18889)を参照してください。結構辛辣にまとめられています。例えば
