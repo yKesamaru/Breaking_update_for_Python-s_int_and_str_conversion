@@ -8,6 +8,7 @@
 https://www.youtube.com/watch?app=desktop&v=eTucYT2LpNU
 今さっき上記YouTubeで知ったのですが、なかなかのニュースが飛び込んできました。
 
+
 **2022年9月7日水曜日、Pythonにおいて下位互換性を破壊するセキュリティーアップデートが緊急でリリースされました。**
 
 すくなからずプロジェクトに変更を強いられるケースが発生するかもしれません。といってもこのケースに当てはまるならばきちんと修正したほうが良い内容ではあります。
@@ -23,6 +24,7 @@ https://www.youtube.com/watch?app=desktop&v=eTucYT2LpNU
 ## 今分かっている対処法
 - 環境変数またはコマンドラインフラグを使用して制限を設定、その後にPythonを再起動
 [Configuring the limit](https://docs.python.org/3/library/stdtypes.html#configuring-the-limit)
+
 https://docs.python.org/3/library/stdtypes.html#configuring-the-limit
 
 ![](https://raw.githubusercontent.com/yKesamaru/Breaking_update_for_Python-s_int_and_str_conversion/master/img/PASTE_IMAGE_2022-09-14-15-41-37.png)
