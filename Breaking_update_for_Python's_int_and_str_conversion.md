@@ -1,4 +1,8 @@
-# int/str変換における破壊的変更のお知らせ
+:::message
+一部加筆修正しました(2022年9月14日15時46分)
+:::
+
+# int/str型変換における破壊的変更のお知らせ
 こんにちは。東海顔認証のyKesamaruです。
 
 https://www.youtube.com/watch?app=desktop&v=eTucYT2LpNU
@@ -11,6 +15,18 @@ https://www.youtube.com/watch?app=desktop&v=eTucYT2LpNU
 詳細は続報が色々なサイトで報じられると思いますので取り急ぎざっとまとめます。
 間違いがありましたらお知らせいただけると幸いです。
 
+## 特に注意が必要なユーザー
+- `SymPy`を直接あるいは間接的に利用している
+
+## 今分かっている対処法
+- 環境変数またはコマンドラインフラグを使用して制限を設定、その後にPythonを再起動
+[Configuring the limit](https://docs.python.org/3/library/stdtypes.html#configuring-the-limit)
+https://docs.python.org/3/library/stdtypes.html#configuring-the-limit
+
+![](https://raw.githubusercontent.com/yKesamaru/Breaking_update_for_Python-s_int_and_str_conversion/master/img/PASTE_IMAGE_2022-09-14-15-41-37.png)
+
+詳細は以下で紹介している[こちら](https://discuss.python.org/t/int-str-conversions-broken-in-latest-python-bugfix-releases/18889)をご参照ください。
+
 ## 概略
 > （意訳）
 > 潜在的なサービス拒否攻撃を回避するため、2(2進数)、4、8(8進数)、16(16進数)、10(10進数)などでintとstrの相互変換を行うとValueErrorを出すようにしました。
@@ -19,7 +35,7 @@ https://www.youtube.com/watch?app=desktop&v=eTucYT2LpNU
 さて公式では以下から参照が可能です。
 https://blog.python.org/2022/09/python-releases-3107-3914-3814-and-3714.html
 
-![](img/PASTE_IMAGE_2022-09-14-13-46-38.png)
+![](https://raw.githubusercontent.com/yKesamaru/Breaking_update_for_Python-s_int_and_str_conversion/master/img/PASTE_IMAGE_2022-09-14-13-46-38.png)
 
 > Converting between int and str in bases other than 2 (binary), 4, 8 (octal), 16 (hexadecimal), or 32 such as base 10 (decimal) now raises a ValueError if the number of digits in string form is above a limit to avoid potential denial of service attacks due to the algorithmic complexity.
 Security releases for 3.9.14, 3.8.14, and 3.7.14 are made available simultaneously to address this issue, along with some less urgent security content.
@@ -28,7 +44,7 @@ Security releases for 3.9.14, 3.8.14, and 3.7.14 are made available simultaneous
 もともとは以下のissueが発端とされています。
 **CVE-2020-10735: Prevent DoS by large int<->str conversions #95778**
 https://github.com/python/cpython/issues/95778
-![](img/PASTE_IMAGE_2022-09-14-14-06-48.png)
+![](https://raw.githubusercontent.com/yKesamaru/Breaking_update_for_Python-s_int_and_str_conversion/master/img/PASTE_IMAGE_2022-09-14-14-06-48.png)
 
 > A huge integer will always consume a near-quadratic amount of CPU time in conversion to or from a base 10 (decimal) string with a large number of digits. No efficient algorithm exists to do otherwise.
 
